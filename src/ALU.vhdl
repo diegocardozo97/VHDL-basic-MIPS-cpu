@@ -1,0 +1,38 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+library UNISIM;
+use UNISIM.VComponents.ALL;
+
+-- The arithmetic logic unit of the cpu.
+-- It has the basic operations.
+entity ALU is
+	PORT( 
+        A : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+	    B : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		CTRL : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+		ZERO : OUT STD_LOGIC;
+		RESULT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    );
+end ALU;
+
+architecture Behavioral of ALU is
+
+SIGNAL OPERATION : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+begin
+	OPERATION <= A AND B WHEN CTRL = "000" ELSE
+				 A OR B WHEN CTRL = "001" ELSE
+				 STD_LOGIC_VECTOR(UNSIGNED(A) + UNSIGNED(B)) WHEN CTRL = "010" ELSE
+				 A WHEN CTRL = "011" ELSE
+				 B(15 DOWNTO 0) & X"0000" WHEN CTRL = "100" ELSE
+				 STD_LOGIC_VECTOR(UNSIGNED(A) - UNSIGNED(B)) WHEN CTRL = "110" ELSE
+				 X"00000001" WHEN CTRL = "111" AND UNSIGNED(A) < UNSIGNED(B) ELSE
+				 X"00000000";
+				
+	RESULT <= OPERATION;
+				
+	ZERO <= '1' WHEN OPERATION = X"00000000" ELSE
+			  '0';
+
+end Behavioral;
