@@ -4,10 +4,10 @@ use IEEE.NUMERIC_STD.ALL;
 library UNISIM;
 use UNISIM.VComponents.ALL;
 
--- ROM that holds the instructions.
+-- ROM that stores the instructions.
 -- It word size is 32 bits and it has 32 registers but it can have up
 -- to 2 ^ 30.
--- It has an asynscronous access.
+-- It has an asynchronous access.
 entity INSTRUCTIONS_MEMORY is
 	PORT(
         READ_ADDRESS : IN STD_LOGIC_VECTOR(31 DOWNTO 0) := X"00000000";
