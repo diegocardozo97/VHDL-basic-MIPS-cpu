@@ -6,7 +6,7 @@ use UNISIM.VComponents.ALL;
 
 -- The data memory component.
 -- The size of the word is of 32 bits and it has fixed 32 locations but
--- it can have up to 2^32.
+-- it can have up to 2^30.
 -- Note: This component works in the falling edge.
 entity DATA_MEMORY is
 	PORT( 
